@@ -1,0 +1,27 @@
+<div class="container">
+    <h2 class="text-center">Resource List</h2>
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Year</th>
+                <th>Color</th>
+                <th>Pantone Value</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let resource of resources">
+                <td> {{ resource.id }} </td>
+                <td> {{ resource.name }} </td>
+                <td> {{ resource.year }} </td>
+                <td> {{ resource.color }} </td>
+                <td> {{ resource.pantone_value }} </td>
+                <td>
+                    <button (click) = "deleteResource(resource.id)" class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
