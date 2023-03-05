@@ -1,24 +1,30 @@
 <div class="container">
-    <div [hidden]="submitted">
+    <div>
       <h1>Login</h1>
-      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-        <div class="form-group">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group mt-3">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email"
-                required
-                [(ngModel)]="login.email" name="email">
+            <input id="email" type="email" class="form-control mt-2" 
+                formControlName="email">
+            <small class="" *ngIf="submitted && loginForm.get('email')?.invalid">
+                Email is required
+            </small>
         </div>
-        
-        <div class="form-group">
+        <div class="form-group mt-3">
             <label for="password">Password</label>
-            <input type="password"  class="form-control" id="password"
-                [(ngModel)]="login.password" name="password">
-        </div>
-        
-        <button type="submit" class="btn btn-success" [disabled]="!loginForm.form.valid">
+            <input type="password" class="form-control mt-2" id="password" 
+                    formControlName="password">
+            <small class="" *ngIf="submitted && loginForm.get('password')?.invalid">
+                Password is required
+            </small>
+        </div>  
+        <button type="submit" class="btn btn-success mt-3" [disabled]="!loginForm.valid">
             Submit
         </button>
     </form>
+    </div>
+    <div [hidden]="!loginFailed" class="alert alert-danger mt-3" role="alert">    
+        Unsuccessful Login
     </div>
 </div>
 

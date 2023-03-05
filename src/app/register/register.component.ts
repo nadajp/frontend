@@ -21,12 +21,24 @@ export class RegisterComponent {
 
   login: Login = new Login()
   submitted = false;
+  registrationFailed = false;
 
   onSubmit() { 
     this.submitted = true
-    this.userService.registerUser(this.login).subscribe(data => {
-      console.log(data)
-      this.router.navigate(['resources'])
+    this.userService.registerUser(this.registrationForm.value).subscribe({
+      next: (token) => {
+        console.log(token)
+        // cache token
+        if (token !== null) {
+          this.router.navigate(['resources'])
+        } else {
+          this.registrationFailed = true
+        }
+      },
+      error: (e) => {
+        console.log('HTTP Error', e)
+        this.registrationFailed = true;
+      }
     })
   }
 }

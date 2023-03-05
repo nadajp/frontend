@@ -1,25 +1,30 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
-import { createSpyFromClass, Spy } from 'jasmine-auto-spies';
 
 import { RegisterComponent } from './register.component';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
+
+let userServiceStub = {
+  token : 'token',
+  registerUser() {
+    return of( this.token );
+  }
+};
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent
   let fixture: ComponentFixture<RegisterComponent>
-  let routerSpy = jasmine.createSpyObj('Router', ['navigate'])
-  const userServiceSpy = jasmine.createSpyObj('UserService', ['registerUser']);
+  const routerSpy = { navigate: jasmine.createSpy('navigate')}
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ RegisterComponent ],
-      imports: [HttpClientTestingModule, FormsModule],
-      providers: [{provide: UserService, useValue: userServiceSpy}, {
-        provide: Router, useValue: routerSpy} 
-      ]
+      imports: [HttpClientTestingModule, ReactiveFormsModule],
+      providers: [{provide: UserService, useValue: userServiceStub},
+        { provide: Router, useValue: routerSpy }] 
     })
     .compileComponents();
   });
@@ -33,4 +38,9 @@ describe('RegisterComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should register user and navigate to resources page', ()=> {
+    component.onSubmit()
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['resources'])
+  })
 })

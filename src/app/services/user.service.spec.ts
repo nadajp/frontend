@@ -29,7 +29,7 @@ describe('UserService', () => {
        email: 'eve.holt@reqres.in',
        password : 'pistol'
     }
-      const mockResponse = "{id: '4', token: 'QpwL5tke4Pnpja7X4'}";
+    const mockResponse = "{id: '4', token: 'QpwL5tke4Pnpja7X4'}";
 
     httpSpy.post.and.nextWith(mockResponse)
     service.registerUser(mockUser).subscribe(

@@ -1,7 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { of } from 'rxjs';
+import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
+
+const userServiceStub = {
+  login() {
+    const token = [{token: 1}];
+    return of( token );
+  }
+};
+
+const routerSpy = { navigate: jasmine.createSpy('navigate')}
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -10,7 +22,9 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      imports: [HttpClientTestingModule, FormsModule]
+      imports: [HttpClientTestingModule, ReactiveFormsModule],
+      providers: [{provide: UserService, useValue: userServiceStub},
+        { provide: Router, useValue: routerSpy }] 
     })
     .compileComponents();
 
@@ -22,4 +36,8 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should login user and navigate to resources page', ()=> {
+    component.onSubmit()
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['resources'])
+  })
 });

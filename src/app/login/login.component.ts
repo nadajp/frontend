@@ -10,22 +10,33 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router) {}
 
-  }
-    loginForm = new FormGroup({
+  loginForm = new FormGroup({
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
   });
 
   login: Login = new Login()
   submitted = false;
+  loginFailed = false
 
   onSubmit() { 
     this.submitted = true
-    this.userService.login(this.login).subscribe(data => {
-      console.log(data)
-      this.router.navigate(['resources'])
+    this.userService.login(this.loginForm.value).subscribe({
+      next: (token) => {
+        console.log(token)
+        // cache token
+        if (token !== null) {
+          this.router.navigate(['resources'])
+        } else {
+          this.loginFailed = true
+        }
+      },
+      error: (e) => {
+        console.log('HTTP Error', e)
+        this.loginFailed = true;
+      }
     })
   }
 }
