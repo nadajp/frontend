@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
 
-  baseUrl = "http://localhost:8080/"
+  baseUrl = "https://backend.nadajp.repl.co/"
   constructor(private httpClient: HttpClient) { 
   }
 

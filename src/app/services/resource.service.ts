@@ -8,7 +8,7 @@ import { Resource } from '../model/resource.model'
 })
 export class ResourceService {
 
-  private baseUrl = "http://localhost:8080/resource"
+  private baseUrl = "https://backend.nadajp.repl.co/resource"
   constructor(private httpClient: HttpClient) { 
   }
 

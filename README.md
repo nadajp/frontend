@@ -11,9 +11,14 @@ The middleware that communicates with REQRES is a Java Spring Boot application. 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.0.
 
-## Development server
+## Running locally
 
+Change backend api urls from replit to localhost
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+## Running on replit
+The application is accessible by navigating to https://replit.com/@nadajp/frontend. If it's not running, go to https://replit.com/@nadajp/frontend and click Run.
+
 
 ## Code scaffolding
 
@@ -35,5 +40,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## TODO
 
 Error handling and default error page
+Store user id after login/registration, allow user to view and edit their user info
 Store Rest API URLs in config file according to run environment
 Unit testing, e2e testing
